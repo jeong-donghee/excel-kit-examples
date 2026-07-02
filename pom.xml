@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.5</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>io.github.jeong-donghee</groupId>
+    <artifactId>excel-kit-examples</artifactId>
+    <version>0.1.0</version>
+    <name>excel-kit-examples</name>
+    <description>excel-kit-grid 사용 예제(베스트 프랙티스) + 메모리 벤치마크</description>
+
+    <properties>
+        <java.version>17</java.version>
+        <excel-kit.version>0.1.0</excel-kit.version>
+    </properties>
+
+    <dependencies>
+        <!-- 발행된 라이브러리를 실제 소비자처럼 의존 -->
+        <dependency>
+            <groupId>io.github.jeong-donghee</groupId>
+            <artifactId>excel-kit-grid</artifactId>
+            <version>${excel-kit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 컴파일 타임 검증 프로세서까지 붙여, @ExcelDownload 오용을 빌드에서 잡는 모습을 시연 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>io.github.jeong-donghee</groupId>
+                            <artifactId>excel-kit-processor</artifactId>
+                            <version>${excel-kit.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
