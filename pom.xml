@@ -15,7 +15,7 @@
     <artifactId>excel-kit-examples</artifactId>
     <version>0.1.0</version>
     <name>excel-kit-examples</name>
-    <description>excel-kit-grid 사용 예제(베스트 프랙티스) + 메모리 벤치마크</description>
+    <description>excel-kit 모듈별 사용 예제(베스트 프랙티스)와 벤치마크</description>
 
     <properties>
         <java.version>17</java.version>
