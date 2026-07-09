@@ -2,8 +2,11 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-[`excel-kit-grid`](https://github.com/jeong-donghee/excel-kit)의 **권장 사용법(베스트 프랙티스)** 레퍼런스 앱과 **메모리 벤치마크**.
-발행된 아티팩트(`io.github.jeong-donghee:excel-kit-grid:0.1.0`)를 실제 소비자처럼 의존한다.
+[excel-kit](https://github.com/jeong-donghee/excel-kit)의 **권장 사용법(베스트 프랙티스)** 레퍼런스 앱과 **메모리 벤치마크**.
+발행된 아티팩트(`excel-kit-grid` / `excel-kit-canvas` `0.2.0`)를 실제 소비자처럼 의존한다.
+
+- **grid** — 목록을 엑셀로 다운로드 (`@ExcelDownload`)
+- **canvas** — 차트 대시보드를 엑셀로 (`@ExcelChart` + `ExcelCanvas`)
 
 ## 실행
 
@@ -13,9 +16,10 @@
 
 | 엔드포인트 | 설명 |
 |------------|------|
-| `GET /sessions/excel` | ① 가장 단순 — `List<T>` 반환 + 행번호 컬럼 |
-| `GET /sessions/wrapped/excel` | ② 공통 응답 래퍼(`ApiResponse<List<T>>`) 그대로 반환 |
-| `GET /sessions/large/excel` | ③ 25만 행 → 시트 3개로 자동 분할 |
+| `GET /sessions/excel` | ① grid — 가장 단순, `List<T>` 반환 + 행번호 컬럼 |
+| `GET /sessions/wrapped/excel` | ② grid — 공통 응답 래퍼(`ApiResponse<List<T>>`) 그대로 반환 |
+| `GET /sessions/large/excel` | ③ grid — 25만 행 → 시트 3개로 자동 분할 |
+| `GET /dashboard/excel` | ④ canvas — 바 + 파이(슬라이스별 색) 차트 대시보드 |
 
 ## 베스트 프랙티스 포인트
 
@@ -23,6 +27,7 @@
 - **컨트롤러** (`SessionController`): `@ExcelDownload`만 붙이고 평소처럼 목록/래퍼 반환.
 - **공통 래퍼** (`ExcelKitConfig`): 래퍼 타입당 `ExcelDataExtractor` 빈 하나 등록.
 - **컴파일 타임 검증**: `excel-kit-processor`를 애노테이션 프로세서로 붙여, 잘못된 `@ExcelDownload`를 빌드에서 잡는다(이 프로젝트 pom 참고).
+- **차트** (`DashboardController`): 차트 클래스에 `@ExcelChart`(+`@ChartCategory`/`@ChartSeries`/`@ChartColor`), `ExcelCanvas.create().chart(list)`로 그린 뒤 응답 스트림에 쓴다. canvas는 프로그래매틱 API라 grid처럼 자동 다운로드는 아니고, 컨트롤러에서 직접 내보낸다.
 
 ## 메모리 벤치마크
 
